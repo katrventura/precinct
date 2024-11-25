@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Maryland Precinct Election Results</title>
+
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      h2,
+      h3 {
+        margin: 10px;
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 16px;
+      }
+
+      p {
+        margin: 10px;
+        text-align: left;
+        padding-left: 20px;
+        padding-right: 20px;
+        
+      }
+
+      .map-overlay {
+        position: absolute;
+        bottom: 0;
+        /* background: rgba(93, 117, 126, 0.85); */
+        background-color: rgba(60, 67, 78, 0.85);
+        width: 300px;
+        margin-left: 40px;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: auto;
+        border-radius: 3px;
+        color: white;
+        margin-top: 40px;
+        text-align: left;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+
+      #features {
+        left: 0;
+        height: 450px;
+        box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+        /* width: 300px; */
+        top: 0;
+        padding-left: 10px;
+        padding-top: 30px;
+        text-align: center;
+        
+        
+      }
+
+      .geocoder {
+        /* position: absolute; */
+        width: 90%;       /* Set width of the geocoder */
+        max-width: 250px; /* Limit max width */
+        margin: 0 auto;   /* Center the geocoder horizontally */
+        margin-bottom: 10px; 
+        align-items: left;
+        padding-left: 10px;
+    }
+
+    .feature-button img {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 5px;
+    }
+
+    .feature-button {
+        background: none;
+        border: none;
+        color: black;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 5px;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+  /* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+    .map-overlay {
+        width: 70%;
+        max-width: none;
+        left: 5%;
+        right: 5%;
+    }
+
+    #legend {
+        top: auto;
+        bottom: 10px;
+    }
+}
+    </style>
+
+  </head>
+  <body>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+    <div id="map"></div>
+    <div class="map-overlay" id="features">
+        <h1>How Did Your Precinct Vote in 2024?</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien.
+        </p>
+        <p>Type your address below to see how your precinct voted:</p>
+        <br></br>
+        <div id="geocoder" class="geocoder"></div>
+
+        <button id="resetViewButton" class="feature-button">
+            <img src="assets/reset-light.png" alt="Reset View" />
+        </button>
+    </div>
+
+    <script>
+// Define default center and zoom level
+const defaultCenter = [-77.34039, 38.90108];
+const marylandBounds = [
+    [-83.11812, 36.41225], 
+    [-73.86812, 40.64762]
+];
+const defaultZoom = 7.5;
+
+// Initialize the map
+mapboxgl.accessToken = 'pk.eyJ1IjoicnlhbmxpdHRsZSIsImEiOiJjbHhjN3Q3aGwwMDJ0MmpvbzUyMzdoc2lkIn0.esK-vXAPC8mP0teJo9Vn6g';
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/ryanlittle/cm3x6wy2l00as01qq3etaaz7d',
+    center: defaultCenter,
+    zoom: defaultZoom,
+    maxBounds: marylandBounds
+});
+
+// Add geocoder
+const geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    placeholder: 'Type an address',
+    bbox: [...marylandBounds[0], ...marylandBounds[1]]
+});
+
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+// Event listener for geocoder result to zoom into the selected location
+geocoder.on('result', function(e) {
+    map.flyTo({
+        center: e.result.center,
+        zoom: 14  // Adjust zoom level as needed when searching an address
+    });
+});
+
+
+// Reset View button functionality
+document.getElementById('resetViewButton').addEventListener('click', function() {
+    map.flyTo({
+        center: defaultCenter,
+        zoom: defaultZoom
+    });
+});
+
+
+ 
+</script>
+</body>
+</html>
