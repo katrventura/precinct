@@ -38,11 +38,13 @@
         bottom: 0;
         /* background: rgba(93, 117, 126, 0.85); */
         background-color: rgba(60, 67, 78, 0.85);
+        /* background-color: #7070ed;
+        opacity: 0.8; */
         width: 300px;
         margin-left: 40px;
         font-family: Arial, Helvetica, sans-serif;
         overflow: auto;
-        border-radius: 3px;
+        border-radius: 5px;
         color: white;
         margin-top: 40px;
         text-align: left;
@@ -57,7 +59,7 @@
 
       #features {
         left: 0;
-        height: 450px;
+        height: 400px;
         box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
         /* width: 300px; */
         top: 0;
@@ -68,20 +70,15 @@
         
       }
 
-      .geocoder {
-        /* position: absolute; */
-        width: 90%;       /* Set width of the geocoder */
-        max-width: 250px; /* Limit max width */
-        margin: 0 auto;   /* Center the geocoder horizontally */
-        margin-bottom: 10px; 
-        align-items: left;
-        padding-left: 10px;
+      .geocoder-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 0px; /* Add spacing between the geocoder and button */
+    margin-left: 10px; /* Optional: align the container with the rest of the overlay */
     }
 
-    .feature-button img {
-        width: 30px;
-        height: 30px;
-        margin-bottom: 5px;
+    .geocoder {
+        flex: 1; /* Make the geocoder take up available space */
     }
 
     .feature-button {
@@ -94,12 +91,16 @@
         font-size: 12px;
         cursor: pointer;
         padding: 5px;
-        width: 100px;
-        height: 100px;
+        width: 40px; /* Adjust size of the button */
+        height: 40px; /* Adjust size of the button */
         display: flex;
-        flex-direction: row;
         align-items: center;
         justify-content: center;
+    }
+
+    .feature-button img {
+        width: 20px; /* Adjust size of the image */
+        height: 20px;
     }
 
 
@@ -110,11 +111,6 @@
         max-width: none;
         left: 5%;
         right: 5%;
-    }
-
-    #legend {
-        top: auto;
-        bottom: 10px;
     }
 }
     </style>
@@ -133,11 +129,12 @@
         </p>
         <p>Type your address below to see how your precinct voted:</p>
         <br></br>
-        <div id="geocoder" class="geocoder"></div>
-
-        <button id="resetViewButton" class="feature-button">
-            <img src="assets/reset-light.png" alt="Reset View" />
-        </button>
+        <div class="geocoder-container">
+            <div id="geocoder" class="geocoder"></div>
+            <button id="resetViewButton" class="feature-button">
+                <img src="assets/reset-light.png" alt="Reset View" />
+            </button>
+        </div>
     </div>
 
     <script>
