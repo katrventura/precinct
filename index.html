@@ -15,6 +15,14 @@
         padding: 0;
       }
 
+      h1{
+        text-align: left;
+        margin: 10px;
+        text-align: left;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
       h2,
       h3 {
         margin: 10px;
@@ -59,7 +67,7 @@
 
       #features {
         left: 0;
-        height: 400px;
+        height: 430px;
         box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
         /* width: 300px; */
         top: 0;
@@ -74,7 +82,8 @@
     display: flex;
     align-items: center; /* Align items vertically */
     gap: 0px; /* Add spacing between the geocoder and button */
-    margin-left: 10px; /* Optional: align the container with the rest of the overlay */
+    margin-left: 30px; /* Optional: align the container with the rest of the overlay */
+    margin-top: 20px;
     }
 
     .geocoder {
@@ -85,7 +94,6 @@
         background: none;
         border: none;
         color: black;
-        text-align: center;
         font-family: Arial, sans-serif;
         font-weight: bold;
         font-size: 12px;
@@ -94,7 +102,7 @@
         width: 40px; /* Adjust size of the button */
         height: 40px; /* Adjust size of the button */
         display: flex;
-        align-items: center;
+        align-items: row;
         justify-content: center;
     }
 
@@ -125,12 +133,11 @@
     <div class="map-overlay" id="features">
         <h1>How Did Your Precinct Vote in 2024?</h1>
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut purus eget sapien.
+          Around 500 precincts in Maryland saw former President Donald Trump leading in the 2024 elections, up from 140 in 2020. While the state remains solidly blue, with Vice President Kamala Harris leading in nearly 1,400 precincts, Trump’s gains tripled his 2020 performance.
         </p>
         <p>Type your address below to see how your precinct voted:</p>
-        <br></br>
         <div class="geocoder-container">
-            <div id="geocoder" class="geocoder"></div>
+            <div id="geocoder" class="geocoder">
             <button id="resetViewButton" class="feature-button">
                 <img src="assets/reset-light.png" alt="Reset View" />
             </button>
