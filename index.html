@@ -117,10 +117,10 @@
     .map-overlay {
         position: absolute; /* Ensures proper positioning */
         bottom: 10px;       /* Move to 10px from the bottom */
-        left: 5px;         /* Align 10px from the left */
+        margin: 0 auto;        
         width: 65%;         /* Adjust width to take up most of the screen */
         max-width: none;    /* Remove max-width restriction */
-        margin: 0;          /* Remove margins */
+        left: 15%;          /* Remove margins */
         padding: 10px;      /* Add padding for better spacing */
         max-height: 70%;    /* Limit height to prevent overflow */
         background-color: rgba(60, 67, 78, 0.85); /* Maintain existing background */
@@ -132,7 +132,7 @@
         height: 110px;       /* Adjust height for flexibility */
         box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
         bottom: 10px;       /* Align with the bottom */
-        left: 10px;         /* Align with the left */
+        left: 15%;     /* Center the overlay */
         text-align: center;
         padding: 10px;      /* Add padding */
     }
@@ -188,9 +188,6 @@
       font-size: 12px; /* Smaller placeholder text */
     }
 
-    /* .feature-button {
-      display: none;
-    } */
 
 }
     </style>
@@ -200,7 +197,7 @@
 
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
-
+    
     <div id="map"></div>
     <div class="map-overlay" id="features">
         <h1>Find Out How Your Precinct Voted in 2024</h1>
@@ -215,7 +212,8 @@
             </button>
         </div>
         <div id="pd"><p>Hover over a precinct!</p></div>
-  </div>
+    </div>
+  
 
     <script>
 // Define default center and zoom level
