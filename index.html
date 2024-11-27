@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>Maryland Precinct Election Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
     <link
@@ -45,10 +47,7 @@
       .map-overlay {
         position: absolute;
         bottom: 0;
-        /* background: rgba(93, 117, 126, 0.85); */
         background-color: rgba(60, 67, 78, 0.85);
-        /* background-color: #7070ed;
-        opacity: 0.8; */
         width: 320px;
         margin-left: 40px;
         font-family: Arial, Helvetica, sans-serif;
@@ -113,78 +112,85 @@
     }
 
 
-/* Mobile-specific styles */
-@media screen and (max-width: 768px) {
-  .map-overlay {
-    width: 40%;
-    max-width: none;
-    left: 5%;
-    right: 5%;
-    margin: 0; /* Remove margins */
-    padding: 10px;
-    max-height: 70%; /* Limit height */
-  }
+  /* Media query for smaller screens */
+  @media screen and (max-width: 600px) {
+    .map-overlay {
+        position: absolute; /* Ensures proper positioning */
+        bottom: 10px;       /* Move to 10px from the bottom */
+        left: 5px;         /* Align 10px from the left */
+        width: 65%;         /* Adjust width to take up most of the screen */
+        max-width: none;    /* Remove max-width restriction */
+        margin: 0;          /* Remove margins */
+        padding: 10px;      /* Add padding for better spacing */
+        max-height: 70%;    /* Limit height to prevent overflow */
+        background-color: rgba(60, 67, 78, 0.85); /* Maintain existing background */
+        border-radius: 5px; /* Rounded corners for a polished look */
+        overflow: auto;     /* Allow scrolling if content overflows */
+    }
 
-  #features {
-        left: 0;
-        height: 230px;
+    #features {
+        height: 110px;       /* Adjust height for flexibility */
         box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
-        /* width: 300px; */
-        top: 0;
-        padding-left: 10px;
-        padding-top: 30px;
-        text-align: center; 
-      }
+        bottom: 10px;       /* Align with the bottom */
+        left: 10px;         /* Align with the left */
+        text-align: center;
+        padding: 10px;      /* Add padding */
+    }
 
-  /* Hide paragraph text in mobile view */
-  .map-overlay p {
-    display: none; /* Hide paragraphs */
-  }
 
-  /* Adjust geocoder and hover container for mobile */
-  .geocoder-container {
-    flex-wrap: wrap;
-    margin: 0; /* Adjust margins for smaller screens */
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+    /* Hide paragraph text in mobile view */
+    .map-overlay p {
+      display: none; /* Hide paragraphs */
+    }
 
-  h1{
-        font-size: 20px; 
-      }
+    /* Adjust geocoder and hover container for mobile */
+    .geocoder-container {
+      flex-wrap: wrap;
+      margin: 0; /* Adjust margins for smaller screens */
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  #pd {
-    font-size: 14px; /* Smaller font size for hover info */
-    padding: 10px; /* Adjust padding for compact layout */
-  }
+    h1{
+          font-size: 20px; 
+          padding-left: 0px;
+        }
 
-  #pd p {
-    display: block;
-  }
+    #pd {
+      display: none;
+    }
+      /* Adjust the geocoder container */
+    .mapboxgl-ctrl-geocoder {
+      width: 40%; /* Adjust the width to make it smaller */
+      font-size: 14px; /* Adjust font size for compactness */
+      margin: 5px;
+    }
 
-  /* Adjust the geocoder container */
-.mapboxgl-ctrl-geocoder {
-  width: 80%; /* Adjust the width to make it smaller */
-  font-size: 14px; /* Adjust font size for compactness */
-}
+    .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+      max-width: 190px;
+    }
+    /* Adjust the input field within the geocoder */
+    .mapboxgl-ctrl-geocoder input {
+      height: 30px; /* Reduce input height */
+      font-size: 12px; /* Adjust font size */
+      padding: 5px; /* Add some padding */
+      max-width: 80%;
+    }
 
-/* Adjust the input field within the geocoder */
-.mapboxgl-ctrl-geocoder input {
-  height: 30px; /* Reduce input height */
-  font-size: 12px; /* Adjust font size */
-  padding: 5px; /* Add some padding */
-  max-width: 80%;
-}
+    .mapboxgl-ctrl-geocoder .mapboxgl-ctrl-geocoder--icon {
+      width: 20px; /* Adjust size of the icon */
+      height: 20px;
+    }
 
-/* Adjust the placeholder text size */
-.mapboxgl-ctrl-geocoder input::placeholder {
-  font-size: 12px; /* Smaller placeholder text */
-}
+    /* Adjust the placeholder text size */
+    .mapboxgl-ctrl-geocoder input::placeholder {
+      font-size: 12px; /* Smaller placeholder text */
+    }
 
-.feature-button {
-  display: none;
-}
+    /* .feature-button {
+      display: none;
+    } */
 
 }
     </style>
@@ -197,7 +203,7 @@
 
     <div id="map"></div>
     <div class="map-overlay" id="features">
-        <h1>How Did Your Precinct Vote in 2024?</h1>
+        <h1>Find Out How Your Precinct Voted in 2024</h1>
         <p>
           Around 500 precincts in Maryland saw former President Donald Trump leading in the 2024 elections, up from 140 in 2020. While the state remains solidly blue, with Vice President Kamala Harris leading in nearly 1,400 precincts, Trump’s gains tripled his 2020 performance.
         </p>
@@ -208,7 +214,7 @@
               <img src="assets/reset-light.png" alt="Reset View" />
             </button>
         </div>
-        <div id="pd"><p>Hover over a precinct.</p></div>
+        <div id="pd"><p>Hover over a precinct!</p></div>
   </div>
 
     <script>
@@ -319,7 +325,7 @@ map.on('load', () => {
         popup.remove();
 
         // Reset the HTML element
-        document.getElementById('pd').innerHTML = '<p>Or hover over a precinct.</p>';
+        document.getElementById('pd').innerHTML = '<p>Hover over a precinct!</p>';
     });
 });
 
