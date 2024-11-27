@@ -117,14 +117,77 @@
     }
 
 
-  /* Media query for smaller screens */
-@media screen and (max-width: 600px) {
-    .map-overlay {
-        width: 70%;
-        max-width: none;
-        left: 5%;
-        right: 5%;
-    }
+
+/* Make the map-overlay responsive for smaller screens */
+@media screen and (max-width: 768px) {
+  .map-overlay {
+    width: 90%; /* Take up 90% of the screen width */
+    left: 5%; /* Center it horizontally */
+    margin: 0; /* Remove external margin to prevent overflow */
+    padding: 15px; /* Adjust padding for smaller screens */
+    max-height: 70%; /* Ensure it doesn't take up too much vertical space */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .map-overlay {
+    width: 100%; /* Take full width on very small screens */
+    left: 0;
+    right: 0;
+    bottom: 0; /* Stick to the bottom */
+    border-radius: 0; /* Remove border radius for a flush layout */
+    max-height: 60%; /* Limit vertical coverage */
+    padding: 10px; /* Smaller padding for better fit */
+  }
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#features {
+  left: 0;
+  height: 500px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  padding-left: 10px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+/* Geocoder container adjustments for responsiveness */
+.geocoder-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  align-items: center;
+  gap: 10px;
+  margin: 20px;
+}
+
+.geocoder {
+  flex: 1;
+  min-width: 200px; /* Prevent collapsing */
+}
+
+.feature-button {
+  background: none;
+  border: none;
+  color: black;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-button img {
+  width: 20px;
+  height: 20px;
 }
     </style>
 
