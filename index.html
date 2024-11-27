@@ -41,6 +41,11 @@
         
       }
 
+      #pd {
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
       .map-overlay {
         position: absolute;
         bottom: 0;
@@ -82,7 +87,7 @@
     display: flex;
     align-items: center; /* Align items vertically */
     gap: 0px; /* Add spacing between the geocoder and button */
-    margin-left: 30px; /* Optional: align the container with the rest of the overlay */
+    margin-left: 30px; 
     margin-top: 20px;
     }
 
@@ -137,12 +142,13 @@
         </p>
         <p>Type your address below to see how your precinct voted:</p>
         <div class="geocoder-container">
-            <div id="geocoder" class="geocoder">
+            <div id="geocoder" class="geocoder"></div>
+            <button id="resetViewButton" class="feature-button">
+              <img src="assets/reset-light.png" alt="Reset View" />
+            </button>
         </div>
-        <button id="resetViewButton" class="feature-button">
-          <img src="assets/reset-light.png" alt="Reset View" />
-      </button>
-    </div>
+        <div id="pd"><p>Or hover over a precinct.</p></div>
+  </div>
 
     <script>
 // Define default center and zoom level
@@ -187,6 +193,72 @@ document.getElementById('resetViewButton').addEventListener('click', function() 
     map.flyTo({
         center: defaultCenter,
         zoom: defaultZoom
+    });
+});
+
+
+
+// coverage_area_results_2024-7sgbou
+// ryanlittle.1r5sbdco
+
+map.on('load', () => {
+    // Add the vector source
+    map.addSource('data', {
+        type: 'vector',
+        url: 'mapbox://ryanlittle.1r5sbdco'
+    });
+
+    map.addLayer({
+      id: 'precinct-layer',
+      type: 'fill',
+      source: 'data',
+      'source-layer': 'coverage_area_results_2024-7sgbou',
+      paint:{
+        'fill-color': '#FF0000',
+        'fill-opacity': 0
+      }
+    });
+
+
+    // Create a popup for hover interaction
+    const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    // Mousemove event for hover interaction
+    map.on('mousemove', 'precinct-layer', (event) => {
+        map.getCanvas().style.cursor = 'pointer';
+
+        const feature = event.features[0];
+        const precinctName = feature.properties.name; // Precinct name
+        const pctTrump = feature.properties.pct_trump.toFixed(1); // Trump percentage
+        const pctHarris = feature.properties.pct_harris.toFixed(1); // Harris percentage
+
+ // Set popup content and position
+ popup.setLngLat(event.lngLat)
+            .setHTML(`
+                <strong>${precinctName}</strong><br>
+                <p><strong>Trump:</strong> ${pctTrump}%</p>
+                <p><strong>Harris:</strong> ${pctHarris}%</p>
+            `)
+            .addTo(map);
+
+        // Optionally update an HTML element outside the map
+        document.getElementById('pd').innerHTML = `
+            <p><strong>${precinctName}</strong></p>
+            <p>Trump: ${pctTrump}%</p>
+            <p>Harris: ${pctHarris}%</p>
+        `;
+    });
+
+    // Remove popup on mouse leave
+    map.on('mouseleave', 'precinct-layer', () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+
+        // Reset the HTML element
+        document.getElementById('pd').innerHTML = '<p>Or hover over a precinct.</p>';
     });
 });
 
